@@ -1,3 +1,16 @@
+<?php
+if (isset($_GET['api'])) {
+  switch ($_GET['api']) {
+    case 'get-categories':
+      include_once 'actions/categories.php';
+      getCategories();
+      break;
+    default:
+      echo response(['status' => 404]);
+  }
+  die;
+}
+?>
 <?php include_once 'header.php' ?>
 <?php
 if (isset($_GET['page'])) {
@@ -14,10 +27,10 @@ if (isset($_GET['page'])) {
       include_once 'modules/categories.php';
       break;
 
-    default: 
+    default:
       include_once 'modules/index.php';
   }
-}else{
+} else {
   include_once 'modules/index.php';
 }
 ?>
