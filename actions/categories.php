@@ -30,7 +30,43 @@ function getCategories() {
     ]);
   }
 }
+function deleteCategory($id){
+  global $mysqli;
+  
+  
+  $res = $mysqli->query("DELETE FROM categories WHERE id = ${id}");
+  if($res){
+    echo response([
+      'message' => 'دسته‌بندی با موفقیت پاک شد',
+      'status' => 200,
+    ]);
+  }else {
+    
+    echo response([
+      'message' => 'خطای غیر منتظره‌ای رخ داد مجدد تلاش کنید',
+      'status' => 404,
+      ]);
+  }
 
+}
+function updateCategory($id, $title){
+  global $mysqli;
+  
+  
+  $res = $mysqli->query("UPDATE categories SET title = '${title}' WHERE id = ${id}");
+  if($res){
+    echo response([
+      'message' => 'دسته‌بندی با موفقیت ویرایش شد',
+      'status' => 200,
+    ]);
+  }else {
+    
+    echo response([
+      'message' => 'خطای غیر منتظره‌ای رخ داد مجدد تلاش کنید',
+      'status' => 404,
+    ]);
+  }
+}
 function addCategory($title) {
   global $mysqli;
   if (!empty($title)) {
@@ -51,7 +87,3 @@ function addCategory($title) {
     echo response(['error' => 'نام دسته‌بندی نمی‌تواند خالی باشد']);
   }
 }
-// echo response($_REQUEST);
-/* if (isset($_POST)) {
-  addCategory($_POST['title']);
-} */
