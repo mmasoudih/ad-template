@@ -1,18 +1,17 @@
 ## ad-template
 
-<div dir="rtl">
 
-### کارایی که باید کنم :
+### TODO :
 
-- [ ] تغییر ریسپانس اضافه کردن دسته‌بندی جدید
+- [ ]  change response of add-category (code to status) 
 
-</div>
 
-### Api
 
- | url        | response         
-| :------------- |:-------------:|
-| `?api=get-categories` | `{id: 1, title: "cat title"}` |
-| `?api=add-categories` | `{message: '...', code: '...'}` |
-| `?api=update-categories` | `{message: '...', status: '...'}` |
-| `?api=delete-category` | `{message: '...', status: '...'}` |
+### API
+
+ | URL        | response         |request type     |
+| :------------- |:-------------:|:-------------:|
+| `?api=get-categories` | `{id: 1, title: "cat title"}` | `GET`
+| `?api=add-categories` | `{message: '...', code: '...'}` | `POST`
+| `?api=update-categories` | `{message: '...', status: '...'}` | `POST`
+| `?api=delete-category` | `{message: '...', status: '...'}` | `POST`
