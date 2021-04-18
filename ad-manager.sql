@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 18, 2021 at 09:52 AM
+-- Generation Time: Apr 18, 2021 at 04:40 PM
 -- Server version: 10.5.9-MariaDB
 -- PHP Version: 7.4.15
 
@@ -44,6 +44,24 @@ INSERT INTO `admin` (`id`, `name`, `phone`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ads`
+--
+
+CREATE TABLE `ads` (
+  `id` int(11) NOT NULL,
+  `cat_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_persian_ci NOT NULL,
+  `description` text COLLATE utf8mb4_persian_ci NOT NULL,
+  `phone` varchar(11) COLLATE utf8mb4_persian_ci NOT NULL,
+  `price` varchar(64) COLLATE utf8mb4_persian_ci NOT NULL,
+  `status` enum('enable','disable') COLLATE utf8mb4_persian_ci NOT NULL,
+  `images` varchar(512) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_persian_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -51,6 +69,14 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `title` varchar(128) COLLATE utf8mb4_persian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_persian_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `title`) VALUES
+(14, 'خودرو'),
+(15, 'ملک و زمین');
 
 -- --------------------------------------------------------
 
@@ -62,8 +88,16 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_persian_ci NOT NULL,
   `phone` varchar(11) COLLATE utf8mb4_persian_ci NOT NULL,
+  `status` enum('enable','disable') COLLATE utf8mb4_persian_ci NOT NULL,
   `password` varchar(256) COLLATE utf8mb4_persian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_persian_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `phone`, `status`, `password`) VALUES
+(3, 'محمد مسعودی', '09213391796', 'enable', '123456789');
 
 --
 -- Indexes for dumped tables
@@ -74,6 +108,14 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ads`
+--
+ALTER TABLE `ads`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_fk` (`user_id`),
+  ADD KEY `category_fk` (`cat_id`);
 
 --
 -- Indexes for table `categories`
@@ -98,16 +140,33 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `ads`
+--
+ALTER TABLE `ads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `ads`
+--
+ALTER TABLE `ads`
+  ADD CONSTRAINT `category_fk` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
