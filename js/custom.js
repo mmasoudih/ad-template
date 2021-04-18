@@ -1,3 +1,4 @@
+
 var vm = new Vue({
   el: "#app",
   created: function () {
@@ -10,10 +11,16 @@ var vm = new Vue({
   },
   data: function () {
     return {
+      loading: false,
       modalTitle: "",
       modalContentType: "",
       userLoggedIn: false,
       isAdmin: false,
+      adsModal: false, 
+      adsFileCount: 1,
+      maxAdsFileCount: 5,
+      adsFileArray: [],
+      adsCategoryModalSelected: '',
       registerForm: {
         fullName: "",
         phone: "",
@@ -29,6 +36,7 @@ var vm = new Vue({
         catIdTemp: "",
       },
       categoryList: [],
+      usersList: []
     };
   },
   methods: {
@@ -113,6 +121,55 @@ var vm = new Vue({
       this.modalContentType = "update-category";
       this.showModal();
     },
+    getUsers(){
+      const data = new FormData();
+      data.append("api", "get-users");
+      axios.post("/index.php", data).then(({ data }) => {
+        const { status , users} = data;
+        if (status === 200) {
+          this.usersList = users;
+        }
+      });
+    },
+    toggleUserStatus(user_id){
+      const data = new FormData();
+      data.append("api", "toggle-user-status");
+      data.append("user_id", user_id);
+      axios.post("/index.php", data).then(({ data }) => {
+        const { status } = data;
+        // console.log(data);
+        if (status === 200) {
+          this.getUsers();
+        }
+      });
+    },
+    showAdsModal() {
+      this.modalTitle = "ایجاد آگهی جدید";
+      this.modalContentType = "new-ads";
+      this.adsModal = true;
+      this.showModal();
+      if(this.categoryList.length == 0){
+        this.getCategory();
+      }
+    },
+    addNewAdsPicture(){
+      if(this.adsFileCount <= this.maxAdsFileCount){
+        this.adsFileCount = this.adsFileCount + 1;
+        this.adsFileArray.push({
+          id: this.makeId(30),
+          content: '', 
+        });
+      }
+    },
+    makeId(length) {
+      let result = ''
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      const charactersLength = characters.length
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength))
+      }
+      return result
+    },
     register() {
       if (this.registerForm.fullName !== "") {
         if (this.registerForm.phone !== "") {
@@ -176,3 +233,31 @@ var vm = new Vue({
 if (window.location.search === "?page=categories") {
   vm.getCategory();
 }
+if (window.location.pathname === "/") {
+  vm.getCategory();
+}
+if (window.location.search === "?page=users") {
+  vm.getUsers();
+}
+
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+  // Do something before request is sent
+  vm.loading = true;
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
+
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  vm.loading = false;
+  return response;
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  return Promise.reject(error);
+});

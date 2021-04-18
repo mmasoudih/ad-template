@@ -34,13 +34,17 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
 
 <body lang="fa" dir="rtl">
   <div id="app">
+  
+    <template v-if="!isAdmin && userLoggedIn">
+      <button @click="showAdsModal" class="rounded-circle btn btn-success text-white" style="position: fixed;right: 15px; bottom: 15px; width: 60px; height: 60px; font-size: 42px; line-height: 50px;"> + </button>
+    </template>
     <!-- Modal -->
     <div class="modal fade" style="background: rgba(0,0,0,.6);" ref="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered" style="transform: translate(0,0);" :class="{'modal-xl': adsModal}" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">{{ modalTitle }}</h5>
-            <button type="button" class="close btn rounded-circle btn-danger" @click="closeModal">
+            <button type="button" class="close btn rounded-circle btn-danger" style="width: 40px; height: 40px;font-size: 20px;" @click="closeModal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -54,7 +58,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
                 <input v-model="loginForm.password" type="password" class="form-control" placeholder="رمز عبور">
               </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-success btn-block" @click="login">ورود به حساب</button>
+                <button type="submit" class="btn btn-success btn-block" @click="login" :disabled="loading">ورود به حساب</button>
               </div>
 
             </template>
@@ -74,7 +78,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
                 <input v-model="registerForm.passwordConfirm" type="password" class="form-control" placeholder="تکرار رمز عبور">
               </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-warning" @click="register">نام نویسی</button>
+                <button type="submit" class="btn btn-warning" @click="register" :disabled="loading">نام نویسی</button>
               </div>
 
 
@@ -86,7 +90,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
                 <input v-model="categoryForm.categoryName" type="text" class="form-control" @keyup.enter="addCategory" placeholder="نام دسته‌بندی جدید را وارد کنید">
               </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary text-white" @click="addCategory">ایجاد دسته‌بندی ‌جدید</button>
+                <button type="submit" class="btn btn-primary text-white" @click="addCategory" :disabled="loading">ایجاد دسته‌بندی ‌جدید</button>
               </div>
             </template>
 
@@ -95,12 +99,55 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
                 <input v-model="categoryForm.categoryName" type="text" class="form-control" @keyup.enter="updateCategory" placeholder="نام دسته‌بندی جدید را وارد کنید">
               </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-info text-white" @click="updateCategory">ویرایش ‌دسته‌بندی</button>
+                <button type="submit" class="btn btn-info text-white" @click="updateCategory" :disabled="loading">ویرایش ‌دسته‌بندی</button>
               </div>
             </template>
 
-            
-            
+
+            <template v-if="modalContentType === 'new-ads'">
+            <div class="row">
+              <div class="col-6 my-2">
+                <div class="form-group my-1">
+                  <input type="text" class="form-control py-1" placeholder="عنوان آگهی را وارد کنید">
+                </div>
+                <div class="form-group my-1">
+                  <input type="text" class="form-control py-1" placeholder="شماره تماس خود را وارد کنید">
+                </div>
+                <div class="form-group my-1">
+                  <input type="text" class="form-control py-1" placeholder="قیمت را وارد کنید">
+                </div>
+                <div class="form-group my-1">
+                <select v-model="adsCategoryModalSelected" class="form-control py-1">
+                  <option value='' disabled>لطفا یک دسته‌بندی را انتخاب کنید</option> 
+                  <template v-for="category in categoryList">
+                    <option :value="category.id">{{ category.title }}</option>
+                  </template>
+                </select>
+                </div>
+                
+                <div class="form-group my-2">
+                  <textarea cols="30" rows="10" class="form-control" placeholder="توضیحات آگهی را وارد کنید"></textarea>
+                </div>
+
+              </div>
+              <div class="col-6">
+                <template v-for="file in adsFileArray">
+                  <input class="form-control" type="file">
+                </template>
+                
+                <div class="d-grid pt-2 gap-2">
+                  <button class="btn btn-info text-white" @click="addNewAdsPicture">عکس جدید</button>
+                </div>
+                
+              </div>
+            </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary " @click="updateCategory" :disabled="loading">ارسال آگهی</button>
+              </div>
+            </template>
+
+
+
 
           </div>
         </div>
@@ -113,9 +160,9 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">صفحه‌اصلی</a>
           </li>
-          <template v-if="!isAdmin">
+          <template v-if="!isAdmin && userLoggedIn">
             <li class="nav-item">
-              <a class="nav-link" href="#">لیست ‌آگهی‌ها</a>
+              <a class="nav-link" href="#">لیست ‌آگهی‌های من</a>
             </li>
           </template>
 
@@ -140,7 +187,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
         </template>
         <template v-if="userLoggedIn || isAdmin">
           <div>
-            <a class="btn btn-dark text-white" @click="logout">خروج از پنل</a>
+            <button class="btn btn-dark text-white" @click="logout" :disabled="loading">خروج از پنل</button>
           </div>
         </template>
       </div>

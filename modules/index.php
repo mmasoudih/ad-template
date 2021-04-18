@@ -5,8 +5,8 @@
         <div class="card-header">دسته‌بندی ها</div>
         <div class="card-body">
           <nav class="nav flex-column">
-            <template v-for="i in 10">
-              <a class="nav-link" href="#"> دسته بندی {{ i }} </a>
+            <template v-for="category in categoryList">
+              <a class="nav-link" href="#"> {{ category.title }} </a>
             </template>
           </nav>
         </div>
