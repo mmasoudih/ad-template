@@ -4,6 +4,8 @@
       <div class="card">
         <div class="card-header">مدیریت دسته‌بندی‌ها</div>
         <div class="card-body">
+          <button class="btn btn-success rounded" @click="openAddCategoryModal">اضافه کردن دسته‌بندی</button> 
+        
           <table class="table table-striped">
             <thead>
               <tr>
@@ -13,15 +15,16 @@
               </tr>
             </thead>
             <tbody>
+            <template v-for="(category, index) in categoryList">
               <tr>
-                <td>12</td>
-                <td>تست</td>
+                <td>{{ index+1 }}</td>
+                <td>{{ category.title }}</td>
                 <td style="text-align: left;">
-                  <a href="#" class="btn btn-sm btn-primary">مشاهده</a>
-                  <a href="#" class="btn btn-sm btn-warning">ویرایش</a>
-                  <a href="#" class="btn btn-sm btn-danger">حذف</a>
+                  <a href="#" class="btn btn-sm btn-warning" @click.prevent="openUpdateCategoryModal(category.id,category.title)">ویرایش</a>
+                  <a href="#" class="btn btn-sm btn-danger" @click.prevent="deleteCategory(category.id)">حذف</a>
                 </td>
               </tr>
+            </template>
             </tbody>
           </table>
         </div>

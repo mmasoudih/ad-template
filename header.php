@@ -45,7 +45,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
             </button>
           </div>
           <div class="modal-body">
-            <template v-if="modalContentType === 1">
+            <template v-if="modalContentType === 'login'">
 
               <div class="form-group my-2">
                 <input v-model="loginForm.phone" type="text" class="form-control" placeholder="شماره موبایل">
@@ -59,7 +59,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
 
             </template>
 
-            <template v-if="modalContentType === 2">
+            <template v-if="modalContentType === 'register'">
 
               <div class="form-group my-2">
                 <input v-model="registerForm.fullName" type="text" class="form-control" placeholder="نام و نام خانوادگی">
@@ -79,6 +79,29 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
 
 
             </template>
+
+
+            <template v-if="modalContentType === 'add-category'">
+              <div class="form-group my-2">
+                <input v-model="categoryForm.categoryName" type="text" class="form-control" @keyup.enter="addCategory" placeholder="نام دسته‌بندی جدید را وارد کنید">
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary text-white" @click="addCategory">ایجاد دسته‌بندی ‌جدید</button>
+              </div>
+            </template>
+
+            <template v-if="modalContentType === 'update-category'">
+              <div class="form-group my-2">
+                <input v-model="categoryForm.categoryName" type="text" class="form-control" @keyup.enter="updateCategory" placeholder="نام دسته‌بندی جدید را وارد کنید">
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-info text-white" @click="updateCategory">ویرایش ‌دسته‌بندی</button>
+              </div>
+            </template>
+
+            
+            
+
           </div>
         </div>
       </div>
