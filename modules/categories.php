@@ -20,8 +20,8 @@
                 <td>{{ index+1 }}</td>
                 <td>{{ category.title }}</td>
                 <td style="text-align: left;">
-                  <a href="#" class="btn btn-sm btn-warning" @click.prevent="openUpdateCategoryModal(category.id,category.title)">ویرایش</a>
-                  <a href="#" class="btn btn-sm btn-danger" @click.prevent="deleteCategory(category.id)">حذف</a>
+                  <button class="btn btn-sm btn-warning" @click="openUpdateCategoryModal(category.id,category.title)" :disabled="loading">ویرایش</button>
+                  <button class="btn btn-sm btn-danger" @click="deleteCategory(category.id)" :disabled="loading">حذف</button>
                 </td>
               </tr>
             </template>

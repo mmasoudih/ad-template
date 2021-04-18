@@ -10,6 +10,9 @@ if (isset($_POST['api'])) {
   if(isset($_POST['cat_title'])){
     $cat_title = $_POST['cat_title'];
   }
+  if(isset($_POST['user_id'])){
+    $user_id = $_POST['user_id'];
+  }
 
 
 
@@ -32,6 +35,15 @@ if (isset($_POST['api'])) {
       include_once 'actions/categories.php';
       updateCategory($cat_id,$cat_title);
       break;
+    case 'get-users':
+      include_once 'actions/users.php';
+      getUsers();
+      break;
+    case 'toggle-user-status':
+      include_once 'actions/users.php';
+      toggleEnableUser($user_id);
+      break;
+    
       
     default:
       echo response(['status' => 404]);
@@ -53,6 +65,10 @@ if (isset($_GET['page'])) {
 
     case 'categories':
       include_once 'modules/categories.php';
+      break;
+
+    case 'ads':
+      include_once 'modules/ads.php';
       break;
 
     default:
