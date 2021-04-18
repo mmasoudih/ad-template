@@ -13,6 +13,29 @@ if (isset($_POST['api'])) {
   if(isset($_POST['user_id'])){
     $user_id = $_POST['user_id'];
   }
+  if(isset($_FILES['ads-pictrue'])){
+    $file = $_FILES['ads-pictrue'];
+  }
+  if(isset($_POST['images'])){
+    $images = $_POST['images'];
+  }
+  if(isset($_POST['ads_title'])){
+    $ads_title = $_POST['ads_title'];
+  }
+  if(isset($_POST['ads_description'])){
+    $ads_description = $_POST['ads_description'];
+  }
+  if(isset($_POST['category_id'])){
+    $category_id = $_POST['category_id'];
+  }
+  if(isset($_POST['ads_price'])){
+    $ads_price = $_POST['ads_price'];
+  }
+  
+  
+  
+  
+
 
 
 
@@ -43,8 +66,14 @@ if (isset($_POST['api'])) {
       include_once 'actions/users.php';
       toggleEnableUser($user_id);
       break;
-    
-      
+    case 'upload':
+      include_once 'actions/upload.php';
+      upload($file);
+      break;
+    case 'save-ads': 
+      include_once 'actions/ads.php';
+      addAds($ads_title,$ads_description,$category_id,$ads_price,$images);
+      break;
     default:
       echo response(['status' => 404]);
   }

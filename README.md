@@ -40,3 +40,14 @@
 | :------------- |:-------------:|
 | `?api=get-users` | `{users: [{...},{...}], status: '...'}`
 | `?api=toggle-user-status` | `{message: '...', status: '...'}`
+
+### uploader API
+ | URL        | response         |
+| :------------- |:-------------:|
+| `?api=upload` | `{message: '...',file:'FILENAME.ext' status: '...'}`
+
+### save new ads API
+
+ | URL        | response         |
+| :------------- |:-------------:|
+| `?api=save-ads` | `NOT COMPLETED`

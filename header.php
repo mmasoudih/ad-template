@@ -35,7 +35,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
 <body lang="fa" dir="rtl">
   <div id="app">
   
-    <template v-if="!isAdmin && userLoggedIn">
+    <template v-if="isAdmin || userLoggedIn">
       <button @click="showAdsModal" class="rounded-circle btn btn-success text-white" style="position: fixed;right: 15px; bottom: 15px; width: 60px; height: 60px; font-size: 42px; line-height: 50px;"> + </button>
     </template>
     <!-- Modal -->
@@ -108,16 +108,16 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
             <div class="row">
               <div class="col-6 my-2">
                 <div class="form-group my-1">
-                  <input type="text" class="form-control py-1" placeholder="عنوان آگهی را وارد کنید">
+                  <input v-model="newAdsForm.adsTitle" type="text" class="form-control py-1" placeholder="عنوان آگهی را وارد کنید">
                 </div>
                 <div class="form-group my-1">
-                  <input type="text" class="form-control py-1" placeholder="شماره تماس خود را وارد کنید">
+                  <input  type="text" class="form-control py-1" placeholder="شماره تماس خود را وارد کنید">
                 </div>
                 <div class="form-group my-1">
-                  <input type="text" class="form-control py-1" placeholder="قیمت را وارد کنید">
+                  <input v-model="newAdsForm.adsPrice" type="text" class="form-control py-1" placeholder="قیمت را وارد کنید">
                 </div>
                 <div class="form-group my-1">
-                <select v-model="adsCategoryModalSelected" class="form-control py-1">
+                <select v-model="newAdsForm.categoryId" class="form-control py-1">
                   <option value='' disabled>لطفا یک دسته‌بندی را انتخاب کنید</option> 
                   <template v-for="category in categoryList">
                     <option :value="category.id">{{ category.title }}</option>
@@ -126,13 +126,14 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
                 </div>
                 
                 <div class="form-group my-2">
-                  <textarea cols="30" rows="10" class="form-control" placeholder="توضیحات آگهی را وارد کنید"></textarea>
+                  <textarea v-model="newAdsForm.adsDescription" cols="30" rows="10" class="form-control" placeholder="توضیحات آگهی را وارد کنید"></textarea>
                 </div>
 
               </div>
               <div class="col-6">
+              {{ listOfUploadedFilesName }}
                 <template v-for="file in adsFileArray">
-                  <input class="form-control" type="file">
+                  <input class="form-control" type="file" @change="uploadFile" accept="images/*">
                 </template>
                 
                 <div class="d-grid pt-2 gap-2">
@@ -142,7 +143,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
               </div>
             </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary " @click="updateCategory" :disabled="loading">ارسال آگهی</button>
+                <button type="submit" class="btn btn-primary " @click="saveAds" :disabled="loading">ارسال آگهی</button>
               </div>
             </template>
 
