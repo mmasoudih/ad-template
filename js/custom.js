@@ -1,4 +1,3 @@
-
 var vm = new Vue({
   el: "#app",
   created: function () {
@@ -16,11 +15,12 @@ var vm = new Vue({
       modalContentType: "",
       userLoggedIn: false,
       isAdmin: false,
-      adsModal: false, 
+      adsModal: false,
       adsFileCount: 1,
       maxAdsFileCount: 5,
       adsFileArray: [],
-      adsCategoryModalSelected: '',
+      adsCategoryModalSelected: "",
+      listOfUploadedFilesName: [],
       registerForm: {
         fullName: "",
         phone: "",
@@ -35,8 +35,15 @@ var vm = new Vue({
         categoryName: "",
         catIdTemp: "",
       },
+      newAdsForm: {
+        adsTitle: '',
+        adsDescription: '',
+        categoryId: '',
+        adsPrice: ''
+
+      },
       categoryList: [],
-      usersList: []
+      usersList: [],
     };
   },
   methods: {
@@ -121,17 +128,17 @@ var vm = new Vue({
       this.modalContentType = "update-category";
       this.showModal();
     },
-    getUsers(){
+    getUsers() {
       const data = new FormData();
       data.append("api", "get-users");
       axios.post("/index.php", data).then(({ data }) => {
-        const { status , users} = data;
+        const { status, users } = data;
         if (status === 200) {
           this.usersList = users;
         }
       });
     },
-    toggleUserStatus(user_id){
+    toggleUserStatus(user_id) {
       const data = new FormData();
       data.append("api", "toggle-user-status");
       data.append("user_id", user_id);
@@ -148,27 +155,65 @@ var vm = new Vue({
       this.modalContentType = "new-ads";
       this.adsModal = true;
       this.showModal();
-      if(this.categoryList.length == 0){
+      if (this.categoryList.length == 0) {
         this.getCategory();
       }
     },
-    addNewAdsPicture(){
-      if(this.adsFileCount <= this.maxAdsFileCount){
+    addNewAdsPicture() {
+      if (this.adsFileCount <= this.maxAdsFileCount) {
         this.adsFileCount = this.adsFileCount + 1;
         this.adsFileArray.push({
           id: this.makeId(30),
-          content: '', 
+          content: "",
         });
       }
     },
+
+    uploadFile(event) {
+      console.log(event.target.files[0]);
+
+      let data = new FormData();
+      data.append("api", "upload");
+      data.append("ads-pictrue", event.target.files[0]);
+
+      let config = {
+        header: {
+          "Content-Type": "image/png",
+        },
+      };
+
+      axios.post("/index.php", data, config).then(({ data }) => {
+        const { file } = data;
+        this.listOfUploadedFilesName.push(file);
+      });
+    },
+    saveAds() {
+
+
+      let data = new FormData();
+      data.append("api", "save-ads");
+      data.append("ads_title", this.newAdsForm.adsTitle);
+      data.append("ads_description", this.newAdsForm.adsDescription);
+      data.append("category_id", this.newAdsForm.categoryId);
+      data.append("ads_price", this.newAdsForm.adsPrice);
+      data.append("images", this.listOfUploadedFilesName);
+
+
+      axios.post("/index.php", data).then(({ data }) => {
+        console.log(data)
+      });
+    },
     makeId(length) {
-      let result = ''
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-      const charactersLength = characters.length
+      let result = "";
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      const charactersLength = characters.length;
       for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength))
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
       }
-      return result
+      return result;
     },
     register() {
       if (this.registerForm.fullName !== "") {
@@ -241,23 +286,29 @@ if (window.location.search === "?page=users") {
 }
 
 // Add a request interceptor
-axios.interceptors.request.use(function (config) {
-  // Do something before request is sent
-  vm.loading = true;
-  return config;
-}, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
-});
+axios.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    vm.loading = true;
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
-  // Any status code that lie within the range of 2xx cause this function to trigger
-  // Do something with response data
-  vm.loading = false;
-  return response;
-}, function (error) {
-  // Any status codes that falls outside the range of 2xx cause this function to trigger
-  // Do something with response error
-  return Promise.reject(error);
-});
+axios.interceptors.response.use(
+  function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    vm.loading = false;
+    return response;
+  },
+  function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    return Promise.reject(error);
+  }
+);

@@ -14,6 +14,8 @@ function login($phone, $password)
     $res = $mysqli->query($query);
     if($res->num_rows > 0){
       $_SESSION['user_logged_in'] = true;
+      $data =$res->fetch_assoc();
+      $_SESSION['user_id'] = $data['id'];
       echo response(['status'=>'ok', 'user'=> $res->fetch_assoc()]);
     }else{
       echo response(['message'=> 'نام کاربری یا رمز عبور اشتباه است']);

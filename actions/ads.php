@@ -5,26 +5,20 @@ header('Accept: Application/json');
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 
-function addAds() {
+function addAds($title,$description,$category_id,$price,$images) {
   global $mysqli;
-  $res = $mysqli->query("INSERT INTO `ads` ()");
-  if ($res->num_rows > 0) {
-    $users = [];
-    while ($row = $res->fetch_assoc()) {
-      $users[] = [
-        'id' => $row['id'],
-        'name' => $row['name'],
-        'phone' => $row['phone'],
-        'status' => $row['status']
-      ];
-    }
-    echo response([
-      'users' => $users,
-      'status' => 200,
-    ]);
-  } else {
-    echo response([
-      'status' => 404,
-    ]);
-  }
+  $array_images = explode(',',$images);
+  $user_id = $_SESSION['user_id'];
+
+  
+  // echo response(serialize($array));
+  echo response([
+    'title' => $title,
+    'description' => $description,
+    'category_id' => $category_id,
+    'price' => $price,
+    'array_images' => $array_images
+  ]);
+  // $res = $mysqli->query("INSERT INTO `ads` ()");
+
 }
