@@ -5,7 +5,25 @@
 
 - [ ]  change response of add-category (code to status) 
 
+- [ ] complete upload picture in ads modal
 
+- [ ] ads management from admin panel 
+
+- [ ] check session exist or no when user call a route ( user wihtout login can see any page now !) 
+
+- [ ] add a loading indicator in the bottom left or any where ( just should be a loading) 
+
+- [ ] hide login modal after success login 
+
+- [ ] make empty all login modal state after close 
+
+- [ ] hide register modal after success register 
+
+- [ ] make empty all register state after close  
+
+- [ ] show validation notifications to user 
+
+- [ ] and much more ... 
 
 ### category managemnt APIs
 
