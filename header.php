@@ -101,7 +101,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
               <a class="nav-link" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=users">مدیریت کاربران</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">مدیریت دسته‌بندی‌ها</a>
+              <a class="nav-link" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=categories">مدیریت دسته‌بندی‌ها</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">مدیریت آگهی‌ها</a>
