@@ -19,6 +19,9 @@ if (isset($_POST['api'])) {
   if(isset($_POST['images'])){
     $images = $_POST['images'];
   }
+  if(isset($_POST['phone'])){
+    $phone = $_POST['phone'];
+  }
   if(isset($_POST['ads_title'])){
     $ads_title = $_POST['ads_title'];
   }
@@ -42,6 +45,14 @@ if (isset($_POST['api'])) {
   
   
   switch ($_POST['api']) {
+    case 'get-ads':
+      include_once 'actions/ads.php';
+      getAds();
+      break;
+    case 'get-ad': // TODO: Problem: حلقه‌ای که میاد اطلاعات رو از دیتابیس فچ میکنه فکر کنم دوبار اجرا میشه. ببین چشه :|
+      include_once 'actions/ads.php';
+      getAd($_POST['id'] ?? null);
+      break;
     case 'get-categories':
       include_once 'actions/categories.php';
       getCategories();
@@ -72,7 +83,7 @@ if (isset($_POST['api'])) {
       break;
     case 'save-ads': 
       include_once 'actions/ads.php';
-      addAds($ads_title,$ads_description,$category_id,$ads_price,$images);
+      addAds($ads_title,$ads_description,$category_id,$ads_price,$images,$phone);
       break;
     default:
       echo response(['status' => 404]);
