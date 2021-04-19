@@ -8,25 +8,32 @@
             <thead> 
               <tr>
                 <th>#</th>
-                <th>نام کامل</th>
+                <th>عنوان</th>
+                <th>توضیحات</th>
                 <th>شماره موبایل</th>
+                <th>دسته‌بندی</th>
+                <th>کاربر</th>
                 <th>وضعیت</th>
                 <th style="text-align: left;">عملیات</th>
               </tr>
             </thead>
             <tbody>
-            <template v-for="(user, index) in usersList">
+            <template v-for="(ads, index) in adsList">
               <tr> 
                 <td>{{ index + 1 }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ user.status == 'enable' ? 'فعال' : 'غیرفعال' }}</td>
-                <td style="text-align: left;" v-if="user.status === 'enable'">
+                <td>{{ ads.title }}</td>
+                <td>{{ ads.description }}</td>
+                <td>{{ ads.phone }}</td>
+                <td>{{ ads.category }}</td>
+                <td>{{ ads.user }}</td>
+                <td>{{ ads.status == 'enable' ? 'فعال' : 'غیرفعال' }}</td>
+
+                <!-- <td style="text-align: left;" v-if="user.status === 'enable'">
                   <button class="btn btn-sm btn-danger" @click.prevent="toggleUserStatus(user.id)" :disabled="loading">غیرفعال کردن</button>
                 </td>
                 <td style="text-align: left;" v-if="user.status === 'disable'">
                   <button class="btn btn-sm btn-success" @click.prevent="toggleUserStatus(user.id)" :disabled="loading">فعال کردن</button>
-                </td>
+                </td> -->
               </tr>
             </template>
             </tbody>

@@ -111,7 +111,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
                   <input v-model="newAdsForm.adsTitle" type="text" class="form-control py-1" placeholder="عنوان آگهی را وارد کنید">
                 </div>
                 <div class="form-group my-1">
-                  <input  type="text" class="form-control py-1" placeholder="شماره تماس خود را وارد کنید">
+                  <input v-model="newAdsForm.phone" type="text" class="form-control py-1" placeholder="شماره تماس خود را وارد کنید">
                 </div>
                 <div class="form-group my-1">
                   <input v-model="newAdsForm.adsPrice" type="text" class="form-control py-1" placeholder="قیمت را وارد کنید">
@@ -131,7 +131,6 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
 
               </div>
               <div class="col-6">
-              {{ listOfUploadedFilesName }}
                 <template v-for="file in adsFileArray">
                   <input class="form-control" type="file" @change="uploadFile" accept="images/*">
                 </template>

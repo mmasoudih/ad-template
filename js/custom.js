@@ -39,11 +39,13 @@ var vm = new Vue({
         adsTitle: '',
         adsDescription: '',
         categoryId: '',
-        adsPrice: ''
+        adsPrice: '',
+        phone: ''
 
       },
       categoryList: [],
       usersList: [],
+      adsList: []
     };
   },
   methods: {
@@ -138,6 +140,17 @@ var vm = new Vue({
         }
       });
     },
+    getAds(){
+      const data = new FormData();
+      data.append("api", "get-ads");
+      axios.post("/index.php", data).then(({ data }) => {
+        const { status, ads } = data;
+        // console.log(data);
+        if (status === 200) {
+          this.adsList = ads;
+        }
+      });
+    },
     toggleUserStatus(user_id) {
       const data = new FormData();
       data.append("api", "toggle-user-status");
@@ -197,6 +210,8 @@ var vm = new Vue({
       data.append("category_id", this.newAdsForm.categoryId);
       data.append("ads_price", this.newAdsForm.adsPrice);
       data.append("images", this.listOfUploadedFilesName);
+      data.append("phone", this.newAdsForm.phone);
+
 
 
       axios.post("/index.php", data).then(({ data }) => {
@@ -284,6 +299,11 @@ if (window.location.pathname === "/") {
 if (window.location.search === "?page=users") {
   vm.getUsers();
 }
+if (window.location.search === "?page=ads") {
+  vm.getAds();
+}
+
+
 
 // Add a request interceptor
 axios.interceptors.request.use(
