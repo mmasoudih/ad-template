@@ -1,5 +1,9 @@
 var vm = new Vue({
   el: "#app",
+  components: {
+  	'carousel': VueCarousel.Carousel,
+    'slide': VueCarousel.Slide
+  },
   created: function () {
     if ($cookies.get("user_logged_in")) {
       this.userLoggedIn = true;
@@ -145,8 +149,10 @@ var vm = new Vue({
       data.append("api", "get-ads");
       axios.post("/index.php", data).then(({ data }) => {
         const { status, ads } = data;
-        // console.log(data);
+        console.log(data);
+
         if (status === 200) {
+          
           this.adsList = ads;
         }
       });
@@ -295,6 +301,7 @@ if (window.location.search === "?page=categories") {
 }
 if (window.location.pathname === "/") {
   vm.getCategory();
+  vm.getAds();
 }
 if (window.location.search === "?page=users") {
   vm.getUsers();

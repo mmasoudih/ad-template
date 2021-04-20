@@ -110,7 +110,9 @@ if (isset($_GET['page'])) {
     case 'ads':
       include_once 'modules/ads.php';
       break;
-
+      case 'details':
+      include_once 'modules/details.php';
+      break; 
     default:
       include_once 'modules/index.php';
   }

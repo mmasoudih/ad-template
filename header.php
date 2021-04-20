@@ -28,6 +28,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/vueperslides.css" rel="stylesheet" />
 
   <title>index</title>
 </head>

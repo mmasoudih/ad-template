@@ -33,7 +33,7 @@ function getAds()
         'phone' => $row['phone'],
         'price' => $row['price'],
         'status' => $row['status'],
-        'images' => $row['images'],
+        'images' => unserialize($row['images']),
       ];
     }
     echo response([

@@ -13,14 +13,13 @@
       </div>
     </div>
     <div class="col-9 d-flex flex-wrap justify-content-center">
-      <template v-for="i in 30">
+      <template v-for="(ads,i) in adsList">
         <div class="card mx-2 mb-2" :key="i" style="width: 18rem">
-          <img src="https://picsum.photos/400/300" class="card-img-top" alt="..." />
+          <img :src="`/uploaded_pictures/${ads.images[0]}`" style="width: 14rem; margin: auto;" class="card-img-top" alt="..." />
           <div class="card-body">
-            <h5 class="card-title">آگهی {{ i }}</h5>
+            <h5 class="card-title">{{ ads.title }}</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make
-              up the bulk of the card's content.
+            {{ ads.description }}
             </p>
             <a href="#" class="btn btn-primary">مشاهده جزئیات</a>
           </div>
