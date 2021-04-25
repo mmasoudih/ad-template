@@ -7,16 +7,15 @@
   <title>ورود به پنل مدیریت</title>
 
   <!-- Bootstrap CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
 </head>
-
 <body dir="rtl">
   <div tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <form action="admin/login.php" method="post">
+          <form action="<?php echo $_SERVER['REQUEST_URI'] == '/admin/' ? $_SERVER['REQUEST_URI'] : $_SERVER['REQUEST_URI'].'/' ?>login.php" method="post">
             <div class="form-group my-2">
               <input name="phone" type="text" class="form-control" placeholder="شماره موبایل">
             </div>

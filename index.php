@@ -1,6 +1,10 @@
 <?php
+ob_start();
+
 if (isset($_POST['api'])) {
-  
+  if(isset($_POST['ads-id'])){
+    $ads_id = $_POST['ads-id'];
+  }
   if(isset($_POST['category_name'])){
     $category_name = $_POST['category_name'];
   }
@@ -35,23 +39,22 @@ if (isset($_POST['api'])) {
     $ads_price = $_POST['ads_price'];
   }
   
-  
-  
-  
-
-
-
-
-  
-  
   switch ($_POST['api']) {
     case 'get-ads':
       include_once 'actions/ads.php';
       getAds();
       break;
-    case 'get-ad': // TODO: Problem: حلقه‌ای که میاد اطلاعات رو از دیتابیس فچ میکنه فکر کنم دوبار اجرا میشه. ببین چشه :|
+    case 'get-ad':
       include_once 'actions/ads.php';
-      getAd($_POST['id'] ?? null);
+      getAd($ads_id);
+      break;
+    case 'delete-ad':
+      include_once 'actions/ads.php';
+      deleteAd($ads_id);
+      break;
+    case 'get-user-ads':
+      include_once 'actions/ads.php';
+      getUserAds();
       break;
     case 'get-categories':
       include_once 'actions/categories.php';
@@ -76,6 +79,10 @@ if (isset($_POST['api'])) {
     case 'toggle-user-status':
       include_once 'actions/users.php';
       toggleEnableUser($user_id);
+      break;
+    case 'toggle-ads-status':
+      include_once 'actions/ads.php';
+      toggleAdsStatus($ads_id);
       break;
     case 'upload':
       include_once 'actions/upload.php';
@@ -109,6 +116,14 @@ if (isset($_GET['page'])) {
 
     case 'ads':
       include_once 'modules/ads.php';
+      break;
+
+    case 'details':
+      include_once 'modules/details.php';
+      break;
+
+    case 'my-ads':
+      include_once 'modules/user_ads.php';
       break;
 
     default:

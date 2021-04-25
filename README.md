@@ -5,11 +5,11 @@
 
 - [ ]  change response of add-category (code to status) 
 
-- [ ] complete upload picture in ads modal
+- [x] complete upload picture in ads modal
 
-- [ ] ads management from admin panel 
+- [x] ads management from admin panel 
 
-- [ ] check session exist or no when user call a route ( user wihtout login can see any page now !) 
+- [x] check session exist or no when user call a route ( user wihtout login can see any page now !) 
 
 - [ ] add a loading indicator in the bottom left or any where ( just should be a loading) 
 
@@ -21,7 +21,7 @@
 
 - [ ] make empty all register state after close  
 
-- [ ] show validation notifications to user 
+- [x] show validation notifications to user 
 
 - [ ] and much more ... 
 

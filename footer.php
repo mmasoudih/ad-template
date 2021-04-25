@@ -3,7 +3,10 @@
 <script src="js/vue.js"></script>
 <script src="js/axios.min.js"></script>
 <script src="js/vue-cookies.js"></script>
+<script src="js/vue-carousel.min.js"></script>
+<script src="js/noty.min.js"></script>
 <script src="js/custom.js"></script>
+
 </body>
 
 </html>

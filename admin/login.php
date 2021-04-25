@@ -11,9 +11,11 @@ function admin_login($phone,$password){
   if (!empty($phone) && !empty($password)) {
     $query = "SELECT * FROM `admin` WHERE `phone` = '${phone}' AND `password` = '${password}'";
     $res = $mysqli->query($query);
-    var_dump($query);
+    
     if($res->num_rows > 0){
       $_SESSION['admin_logged_in'] = true;
+      $data =$res->fetch_assoc();
+      $_SESSION['user_id'] = $data['id'];
       // echo response(['status'=>'ok', 'user'=> $res->fetch_assoc()]);
       return true;
     }else{
