@@ -33,8 +33,7 @@ function getCategories() {
 function deleteCategory($id){
   global $mysqli;
   
-  
-  $res = $mysqli->query("DELETE FROM categories WHERE id = ${id}");
+  $res = $mysqli->query("DELETE FROM `categories` WHERE `id` = ${id}");
   if($res){
     echo response([
       'message' => 'دسته‌بندی با موفقیت پاک شد',

@@ -13,10 +13,20 @@ function login($phone, $password)
     $query = "SELECT * FROM `users` WHERE `phone` = '${phone}' AND `password` = '${password}'";
     $res = $mysqli->query($query);
     if($res->num_rows > 0){
-      $_SESSION['user_logged_in'] = true;
       $data =$res->fetch_assoc();
-      $_SESSION['user_id'] = $data['id'];
-      echo response(['status'=>'ok', 'user'=> $res->fetch_assoc()]);
+      if($data['status'] == 'disable'){
+        echo response(['status' => 'not ok', 'message'=> 'حساب کاربری شما مسدود شده است.']);
+      }else{
+        if($data['role'] == 'admin'){
+          $_SESSION['admin_logged_in'] = true;
+        }else{
+          $_SESSION['user_logged_in'] = true; 
+        }
+        $_SESSION['user_id'] = $data['id'];
+        echo response(['status'=>'ok', 'user'=> $res->fetch_assoc()]);
+      }
+      
+     
     }else{
       echo response(['message'=> 'نام کاربری یا رمز عبور اشتباه است']);
     }

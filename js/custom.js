@@ -49,7 +49,9 @@ var vm = new Vue({
       },
       categoryList: [],
       usersList: [],
-      adsList: []
+      adsList: [],
+      singleAds: [],
+      userAdsList: []
     };
   },
   methods: {
@@ -157,6 +159,33 @@ var vm = new Vue({
         }
       });
     },
+    deleteAd(id) {
+      const data = new FormData();
+      data.append("api", "delete-ad");
+      data.append("ads-id", id);
+      axios.post("/index.php", data).then(({ data }) => {
+        const { status } = data;
+        if (status === 200) {
+          this.getAds();
+          this.getUserAds();
+        }
+      });
+    },
+    getAd(id){
+      const data = new FormData();
+      data.append("api", "get-ad");
+      data.append("ads-id", id);
+      axios.post("/index.php", data).then(({ data }) => {
+        console.log(data)
+        const { status, ad } = data;
+        // console.log(data);
+
+        if (status === 200) {
+          
+          this.singleAds = ad;
+        }
+      });
+    },
     toggleUserStatus(user_id) {
       const data = new FormData();
       data.append("api", "toggle-user-status");
@@ -166,6 +195,18 @@ var vm = new Vue({
         // console.log(data);
         if (status === 200) {
           this.getUsers();
+        }
+      });
+    },
+    toggleAdsStatus(adsId){
+      const data = new FormData();
+      data.append("api", "toggle-ads-status");
+      data.append("ads-id", adsId);
+      axios.post("/index.php", data).then(({ data }) => {
+        const { status } = data;
+        // console.log(data);
+        if (status === 200) {
+          this.getAds();
         }
       });
     },
@@ -221,8 +262,34 @@ var vm = new Vue({
 
 
       axios.post("/index.php", data).then(({ data }) => {
-        console.log(data)
+        if(data.status == 400){
+          this.$noty.error({message: data.message});
+        }else{
+          this.newAdsForm.adsTitle = '';
+          this.newAdsForm.adsDescription = '';
+          this.newAdsForm.categoryId = '';
+          this.newAdsForm.adsPrice = '';
+          this.newAdsForm.phone = '';
+          this.closeModal();
+          this.$noty.success({message: data.message});
+        }
       });
+    },
+    getUserAds(){
+      const data = new FormData();
+      data.append("api", "get-user-ads")
+      axios.post("/index.php", data).then(({ data }) => {
+        // console.log(data)
+        const { status, ads } = data;
+        // console.log(data);
+
+        if (status === 200) {
+          
+          this.userAdsList = ads;
+        }
+        console.log(this.userAdsList.ads)
+      });
+      // this.userAdsList
     },
     makeId(length) {
       let result = "";
@@ -252,21 +319,23 @@ var vm = new Vue({
                   "password_confirm",
                   this.registerForm.passwordConfirm
                 );
-                axios.post("/register.php", data);
+                axios.post("/register.php", data).then(({ data })=>{
+                  this.$noty.success({message: data.message});
+                });
               } else {
-                console.log("رمز عبور یکسان نیست");
+                this.$noty.info({message: 'رمز عبور یکسان نیست'});
               }
             } else {
-              console.log("تکرار رمز عبور نمیتواند خالی باشد");
+              this.$noty.info({message: 'تکرار رمز عبور نمیتواند خالی باشد'});
             }
           } else {
-            console.log("رمز عبور نمیتواند خالی باشد");
+            this.$noty.info({message: 'رمز عبور نمیتواند خالی باشد'});
           }
         } else {
-          console.log("شماره موبایل را وارد کنید");
+          this.$noty.info({message: 'شماره موبایل را وارد کنید'});
         }
       } else {
-        console.log("نام را وارد کنید");
+        this.$noty.info({message: 'نام را وارد کنید'});
       }
     },
     login() {
@@ -277,14 +346,20 @@ var vm = new Vue({
           data.append("password", this.loginForm.password);
           axios.post("/login.php", data).then(({ data }) => {
             if (data.status === "ok") {
-              window.location.reload();
+              setTimeout(()=>{
+                window.location.reload();
+              },2000);
+              this.$noty.success({message: 'ورود با موفقیت انجام شد'});
+
+            }else{
+              this.$noty.error({message: data.message});
             }
           });
         } else {
-          console.log("رمز عبور نمیتواند خالی باشد");
+          this.$noty.info({message: 'رمز عبور نمیتواند خالی باشد'});
         }
       } else {
-        console.log("شماره موبایل را وارد کنید");
+        this.$noty.info({message: 'شماره موبایل را وارد کنید'});
       }
     },
     logout() {
@@ -295,21 +370,78 @@ var vm = new Vue({
       });
     },
   },
+  computed:{
+    visibleAds(){
+      return this.adsList.filter(item => item.status === 'enable')
+    }
+  }
 });
-if (window.location.search === "?page=categories") {
+const url = new URLSearchParams(window.location.search);
+
+
+if (url.get('page') === "categories") {
   vm.getCategory();
 }
 if (window.location.pathname === "/") {
   vm.getCategory();
   vm.getAds();
 }
-if (window.location.search === "?page=users") {
+if (url.get('page') === "users") {
   vm.getUsers();
 }
-if (window.location.search === "?page=ads") {
+if (url.get('page') === "ads") {
   vm.getAds();
 }
+if( url.get('page') === "my-ads"){
+  vm.getUserAds();
+}
 
+if (url.get('page') === "details") {
+  const url = new URLSearchParams(window.location.search);
+  const id = url.get('id');
+  vm.getAd(id);
+}
+
+
+
+const noty = {
+  success ({ message, position = 'bottomLeft' }) {
+    return new Noty({
+      text: message,
+      timeout: 3000,
+      type: 'success',
+      layout: position,
+    }).show()
+  },
+
+  warning ({ message, position = 'bottomLeft' }) {
+    return new Noty({
+      text: message,
+      timeout: 3000,
+      type: 'warning',
+      layout: position,
+    }).show()
+  },
+
+  error ({ message, position = 'bottomLeft' }) {
+    return new Noty({
+      text: message,
+      timeout: 3000,
+      type: 'error',
+      layout: position,
+    }).show()
+  },
+
+  info ({ message, position = 'bottomLeft' }) {
+    return new Noty({
+      text: message,
+      timeout: 3000,
+      type: 'info',
+      layout: position,
+    }).show()
+  }
+}
+Vue.prototype.$noty = noty
 
 
 // Add a request interceptor

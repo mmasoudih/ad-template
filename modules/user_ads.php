@@ -1,7 +1,3 @@
-<?php 
-  require_once 'includes/functions.php';
-  checkAdminLogin();
-?>
 <div class="container-fluid">
   <div class="row mt-5">
     <div class="col-12">
@@ -22,7 +18,7 @@
               </tr>
             </thead>
             <tbody>
-            <template v-for="(ads, index) in adsList">
+            <template v-for="(ads, index) in userAdsList">
               <tr> 
                 <td>{{ index + 1 }}</td>
                 <td>{{ ads.title }}</td>
@@ -43,14 +39,8 @@
 
                 </td>
 
-                <td style="text-align: left;" v-if="ads.status === 'enable'">
                 
-                  <button class="btn btn-sm btn-warning" @click.prevent="toggleAdsStatus(ads.id)" :disabled="loading">رد آگهی</button>
-                  <button class="btn btn-sm btn-danger" @click.prevent="deleteAd(ads.id)" :disabled="loading">حذف</button>
-
-                </td>
-                <td style="text-align: left;" v-if="ads.status === 'disable'">
-                  <button class="btn btn-sm btn-warning" @click.prevent="toggleAdsStatus(ads.id)" :disabled="loading">تایید اگهی</button>
+                <td style="text-align: left;">
                   <button class="btn btn-sm btn-danger" @click.prevent="deleteAd(ads.id)" :disabled="loading">حذف</button>
 
                 </td>

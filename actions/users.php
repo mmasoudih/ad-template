@@ -11,12 +11,16 @@ function getUsers() {
   if ($res->num_rows > 0) {
     $users = [];
     while ($row = $res->fetch_assoc()) {
-      $users[] = [
-        'id' => $row['id'],
-        'name' => $row['name'],
-        'phone' => $row['phone'],
-        'status' => $row['status']
-      ];
+      if($row['role'] != 'admin'){
+        $users[] = [
+          'id' => $row['id'],
+          'name' => $row['name'],
+          'phone' => $row['phone'],
+          'status' => $row['status'],
+          'role' => $row['role']
+        ];
+      }
+      
     }
     echo response([
       'users' => $users,

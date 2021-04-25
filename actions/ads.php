@@ -29,7 +29,7 @@ function getAds()
         'title' => $row['title'],
         'category' => getCategoryNameById($row['cat_id']),
         'user' => getUserNameById($row['user_id']),
-        'description' => $row['description'],
+        'description' => truncate($row['description'], 150),
         'phone' => $row['phone'],
         'price' => $row['price'],
         'status' => $row['status'],
@@ -67,7 +67,7 @@ function getAd($id = null)
         'phone' => $row['phone'],
         'price' => $row['price'],
         'status' => $row['status'],
-        'images' => $row['images'],
+        'images' => unserialize($row['images']),
       ];
     }
     echo response([
@@ -83,37 +83,99 @@ function getAd($id = null)
 
 function addAds($title, $description, $category_id, $price, $images, $phone)
 {
-  global $mysqli;
-  $array_images = explode(',', $images);
-  $arr_serialize = serialize($array_images);
-  $user_id = $_SESSION['user_id'];
-  $status = 'enable';
-  $query = "INSERT INTO `ads` (`id`, `cat_id`, `user_id`, `title`, `description`, `phone`, `price`, `status`, `images`) VALUES (NULL, '${category_id}', '${user_id}', '${title}', '${description}', '${phone}', '${price}', '${status}', '${arr_serialize}')";
-
-  $result = $mysqli->query($query); 
-  // echo response($query);
-  // die();
-  // TODO
-
-  if($result){
-    echo response([
-      'message' => 'تبلیغ با موفقیت ثبت شد',
-      'status' => 200
-    ]);
+  if(!empty($title) && !empty($description) && !empty($category_id) && !empty($price) && !empty($images) && !empty($phone) ){
+    global $mysqli;
+    $array_images = explode(',', $images);
+    $arr_serialize = serialize(array_filter($array_images));
+    $user_id = $_SESSION['user_id'];
+    $status = 'enable';
+    $query = "INSERT INTO `ads` (`id`, `cat_id`, `user_id`, `title`, `description`, `phone`, `price`, `status`, `images`) VALUES (NULL, '${category_id}', '${user_id}', '${title}', '${description}', '${phone}', '${price}', '${status}', '${arr_serialize}')";
+  
+    $result = $mysqli->query($query); 
+  
+    if($result){
+      echo response([
+        'message' => 'تبلیغ با موفقیت ثبت شد',
+        'status' => 200
+      ]);
+    }else{
+      echo response([
+        'message' => 'خطایی در ثبت رخ داد',
+        'status' => 400
+      ]);
+    }
   }else{
     echo response([
-      'message' => 'خطایی در ثبت رخ داد',
+      'message' => 'همه فیلد ها را پر کنید',
       'status' => 400
     ]);
   }
 
-  // echo response([
-  //   'title' => $title,
-  //   'description' => $description,
-  //   'category_id' => $category_id,
-  //   'price' => $price,
-  //   'array_images' => serialize($array_images)
-  // ]);
-  // $res = $mysqli->query("INSERT INTO `ads` ()");
+}
 
+function toggleAdsStatus($ads_id){
+  global $mysqli;
+  $status = $mysqli->query("SELECT (`status`) FROM `ads` WHERE `id` = ${ads_id}")->fetch_assoc();
+  if($status['status'] == 'enable'){
+    $status = $mysqli->query("UPDATE `ads` SET `status` = 'disable' WHERE `id` = ${ads_id}");
+    echo response([
+      'message' => 'وضعیت با موفقیت تغییر کرد',
+      'status' => 200
+    ]);
+  }
+  else if($status['status'] == 'disable'){
+    $status = $mysqli->query("UPDATE `ads` SET `status` = 'enable' WHERE `id` = ${ads_id}");
+    echo response([
+      'message' => 'وضعیت با موفقیت تغییر کرد',
+      'status' => 200
+    ]);
+  }
+}
+
+function deleteAd($id){
+  global $mysqli;
+  
+  $res = $mysqli->query("DELETE FROM `ads` WHERE `id` = ${id}");
+  if($res){
+    echo response([
+      'message' => 'آگهی با موفقیت پاک شد',
+      'status' => 200,
+    ]);
+  }else {
+    
+    echo response([
+      'message' => 'خطای غیر منتظره‌ای رخ داد مجدد تلاش کنید',
+      'status' => 404,
+      ]);
+  }
+
+}
+function getUserAds(){
+  global $mysqli;
+  $user_id = $_SESSION['user_id'];
+  $res = $mysqli->query("SELECT * FROM `ads` WHERE `user_id` = $user_id ");
+  if ($res->num_rows > 0) {
+    $ads = [];
+    while ($row = $res->fetch_assoc()) {
+      $ads[] = [
+        'id' => $row['id'],
+        'title' => $row['title'],
+        'category' => getCategoryNameById($row['cat_id']),
+        'user' => getUserNameById($row['user_id']),
+        'description' => truncate($row['description'], 150),
+        'phone' => $row['phone'],
+        'price' => $row['price'],
+        'status' => $row['status'],
+        'images' => unserialize($row['images']),
+      ];
+    }
+    echo response([
+      'ads' => $ads,
+      'status' => 200,
+    ]);
+  } else {
+    echo response([
+      'status' => 404,
+    ]);
+  }
 }

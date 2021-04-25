@@ -18,3 +18,4 @@ if ($mysqli -> connect_errno) {
 }
 
 $mysqli->set_charset(CHARSET);
+$mysqli->query('SET foreign_key_checks = 0');

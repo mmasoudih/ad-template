@@ -29,6 +29,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/vueperslides.css" rel="stylesheet" />
+  <link href="css/noty.css" rel="stylesheet" />
 
   <title>index</title>
 </head>
@@ -40,7 +41,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
       <button @click="showAdsModal" class="rounded-circle btn btn-success text-white" style="position: fixed;right: 15px; bottom: 15px; width: 60px; height: 60px; font-size: 42px; line-height: 50px;"> + </button>
     </template>
     <!-- Modal -->
-    <div class="modal fade" style="background: rgba(0,0,0,.6);" ref="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal fade" style="background: rgba(0,0,0,.2);" ref="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" style="transform: translate(0,0);" :class="{'modal-xl': adsModal}" role="document">
         <div class="modal-content">
           <div class="modal-header">

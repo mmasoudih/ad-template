@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col-9 d-flex flex-wrap justify-content-center">
-      <template v-for="(ads,i) in adsList">
+      <template v-for="(ads,i) in visibleAds">
         <div class="card mx-2 mb-2" :key="i" style="width: 18rem">
           <img :src="`/uploaded_pictures/${ads.images[0]}`" style="width: 14rem; margin: auto;" class="card-img-top" alt="..." />
           <div class="card-body">
@@ -21,7 +21,7 @@
             <p class="card-text">
             {{ ads.description }}
             </p>
-            <a href="#" class="btn btn-primary">مشاهده جزئیات</a>
+            <a :href="`index.php?page=details&id=${ads.id}`" class="btn btn-primary">مشاهده جزئیات</a>
           </div>
         </div>
       </template>
