@@ -22,6 +22,7 @@ var vm = new Vue({
       adsModal: false,
       adsFileCount: 1,
       maxAdsFileCount: 5,
+      noAdsFound: false,
       adsFileArray: [],
       adsCategoryModalSelected: "",
       listOfUploadedFilesName: [],
@@ -65,7 +66,12 @@ var vm = new Vue({
       this.modalContentType = "";
       this.categoryForm.catIdTemp = "";
       this.categoryForm.categoryName = "";
-
+      this.registerForm.fullName = "";
+      this.registerForm.phone = "";
+      this.registerForm.password = "";
+      this.registerForm.passwordConfirm = "";
+      this.loginForm.phone = "";
+      this.loginForm.password = "";
       this.$refs.modal.style.opacity = 0;
       this.$refs.modal.style.display = "none";
     },
@@ -321,6 +327,9 @@ var vm = new Vue({
                 );
                 axios.post("/register.php", data).then(({ data })=>{
                   this.$noty.success({message: data.message});
+                  this.closeModal();
+                  this.showLoginModal();
+
                 });
               } else {
                 this.$noty.info({message: 'رمز عبور یکسان نیست'});
@@ -369,6 +378,45 @@ var vm = new Vue({
         }
       });
     },
+    filterResultByCategory(event){
+
+      const data = new FormData();
+      data.append('api', 'filter-cat');
+      data.append('catId', event);
+      
+      axios.post("/index.php", data).then(({ data })=>{
+        const { ads } = data;
+        if(ads.length > 0){
+          this.adsList = ads;
+          this.noAdsFound = false;
+        } else { 
+          this.noAdsFound = true;
+        }
+      });
+
+    },
+    filterResultBySearch(event){
+      if(event.target.value !== ''){
+        const data = new FormData();
+        data.append('api', 'search');
+        data.append('keyword', event.target.value);
+        
+        axios.post("/index.php", data).then(({ data })=>{
+          console.log(data)
+          const { ads } = data;
+          if(ads.length > 0){
+            this.adsList = ads;
+            this.noAdsFound = false;
+          } else { 
+            this.noAdsFound = true;
+          }
+        });
+      }
+    },
+    showAllAds(){
+      this.getAds();
+      this.noAdsFound = false;
+    }
   },
   computed:{
     visibleAds(){

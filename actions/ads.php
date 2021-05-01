@@ -179,3 +179,61 @@ function getUserAds(){
     ]);
   }
 }
+function searchAds($keyword){
+  global $mysqli;
+  $res = $mysqli->query("SELECT * FROM `ads` WHERE `title` LIKE '%${keyword}%' OR `description` LIKE '%${keyword}%' AND `status` = 'enable'");
+  if ($res->num_rows > 0) {
+    $ads = [];
+    while ($row = $res->fetch_assoc()) {
+      $ads[] = [
+        'id' => $row['id'],
+        'title' => $row['title'],
+        'category' => getCategoryNameById($row['cat_id']),
+        'user' => getUserNameById($row['user_id']),
+        'description' => truncate($row['description'], 150),
+        'phone' => $row['phone'],
+        'price' => $row['price'],
+        'status' => $row['status'],
+        'images' => unserialize($row['images']),
+      ];
+    }
+    echo response([
+      'ads' => $ads,
+      'status' => 200,
+    ]);
+  }else{
+    echo response([
+      'ads' => [],
+      'status' => 404,
+    ]);
+  }
+}
+function filterByCategory($category_id){
+  global $mysqli;
+  $res = $mysqli->query("SELECT * FROM `ads` WHERE `cat_id` = ${category_id} AND `status` = 'enable'");
+  if ($res->num_rows > 0) {
+    $ads = [];
+    while ($row = $res->fetch_assoc()) {
+      $ads[] = [
+        'id' => $row['id'],
+        'title' => $row['title'],
+        'category' => getCategoryNameById($row['cat_id']),
+        'user' => getUserNameById($row['user_id']),
+        'description' => truncate($row['description'], 150),
+        'phone' => $row['phone'],
+        'price' => $row['price'],
+        'status' => $row['status'],
+        'images' => unserialize($row['images']),
+      ];
+    }
+    echo response([
+      'ads' => $ads,
+      'status' => 200,
+    ]);
+  }else{
+    echo response([
+      'ads' => [],
+      'status' => 404,
+    ]);
+  }
+}

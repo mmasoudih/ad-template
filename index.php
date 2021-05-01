@@ -38,6 +38,14 @@ if (isset($_POST['api'])) {
   if(isset($_POST['ads_price'])){
     $ads_price = $_POST['ads_price'];
   }
+  if(isset($_POST['keyword'])){
+    $keyword = $_POST['keyword'];
+  }
+  if(isset($_POST['catId'])){
+    $catId = $_POST['catId'];
+  }
+
+
   
   switch ($_POST['api']) {
     case 'get-ads':
@@ -91,6 +99,14 @@ if (isset($_POST['api'])) {
     case 'save-ads': 
       include_once 'actions/ads.php';
       addAds($ads_title,$ads_description,$category_id,$ads_price,$images,$phone);
+      break;
+    case 'search':
+      include_once 'actions/ads.php';
+      searchAds($keyword);
+      break;
+    case 'filter-cat':
+      include_once 'actions/ads.php';
+      filterByCategory($catId);
       break;
     default:
       echo response(['status' => 404]);

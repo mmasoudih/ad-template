@@ -1,0 +1,29 @@
+.absolute-button-bottom{
+	width: 100%;
+	position: absolute;
+	border-radius: 0;
+	right: 0;
+	bottom: -20px;
+}
+.relative-position{
+	position: relative;
+}
+.card-img-top {
+    width: 100% !important;
+    height: 15vw;
+    object-fit: cover;
+}
+html,body,#app{
+	height: 100%;
+}
+#app{
+	position: relative;
+	z-index: 2;
+	margin-bottom: 150px;
+	background: white; 
+}
+.footer{
+	height: 60px;
+	position: fixed;
+	bottom: 0;
+}

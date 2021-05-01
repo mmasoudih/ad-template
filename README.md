@@ -3,23 +3,21 @@
 
 ### TODO :
 
-- [ ]  change response of add-category (code to status) 
-
 - [x] complete upload picture in ads modal
 
 - [x] ads management from admin panel 
 
 - [x] check session exist or no when user call a route ( user wihtout login can see any page now !) 
 
-- [ ] add a loading indicator in the bottom left or any where ( just should be a loading) 
+- [x] add a loading indicator in the bottom left or any where ( just should be a loading) 
 
-- [ ] hide login modal after success login 
+- [x] hide login modal after success login 
 
-- [ ] make empty all login modal state after close 
+- [x] make empty all login modal state after close 
 
-- [ ] hide register modal after success register 
+- [x] hide register modal after success register 
 
-- [ ] make empty all register state after close  
+- [x] make empty all register state after close  
 
 - [x] show validation notifications to user 
 
