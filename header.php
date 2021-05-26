@@ -32,7 +32,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
   <link href="css/noty.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/custom.css">
 
-  <title>index</title>
+  <title> آگهیش کن !</title>
 </head>
 
 <body lang="fa" dir="rtl">
@@ -43,7 +43,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
     </template>
     <!-- Modal -->
     <div class="modal fade" style="background: rgba(0,0,0,.2);" ref="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" style="transform: translate(0,0);" :class="{'modal-xl': adsModal}" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="transform: translate(0,0);" :class="{'modal-xl': adsModal}" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">{{ modalTitle }}</h5>
@@ -109,7 +109,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
 
             <template v-if="modalContentType === 'new-ads'">
             <div class="row">
-              <div class="col-6 my-2">
+              <div class="col-12 col-md-6 my-2">
                 <div class="form-group my-1">
                   <input v-model="newAdsForm.adsTitle" type="text" class="form-control py-1" placeholder="عنوان آگهی را وارد کنید">
                 </div>
@@ -133,7 +133,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
                 </div>
 
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <template v-for="file in adsFileArray">
                   <input class="form-control" type="file" @change="uploadFile" accept="images/*">
                 </template>
@@ -158,26 +158,26 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">صفحه‌اصلی</a>
+      <div class="container-fluid d-block d-md-flex">
+        <ul class="navbar-nav mb-2 mb-lg-0 flex-md-row p-0 p-md-2 text-center">
+          <li class="nav-item px-md-3">
+            <a class="nav-link text-white active" aria-current="page" href="/">صفحه‌اصلی</a>
           </li>
           <template v-if="!isAdmin && userLoggedIn">
             <li class="nav-item">
-              <a class="nav-link" href="#">لیست ‌آگهی‌های من</a>
+              <a class="nav-link text-white" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=my-ads">لیست ‌آگهی‌های من</a>
             </li>
           </template>
 
           <template v-if="isAdmin">
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=users">مدیریت کاربران</a>
+            <li class="nav-item px-md-3">
+              <a class="nav-link text-white" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=users">مدیریت کاربران</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=categories">مدیریت دسته‌بندی‌ها</a>
+            <li class="nav-item px-md-3">
+              <a class="nav-link text-white" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=categories">مدیریت دسته‌بندی‌ها</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=ads">مدیریت آگهی‌ها</a>
+            <li class="nav-item px-md-3">
+              <a class="nav-link text-white" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=ads">مدیریت آگهی‌ها</a>
             </li>
           </template>
 
@@ -190,7 +190,7 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
         </template>
         <template v-if="userLoggedIn || isAdmin">
           <div>
-            <button class="btn btn-dark text-white" @click="logout" :disabled="loading">خروج از پنل</button>
+            <button class="btn btn-dark text-white" @click="logout" :disabled="loading" style="width:100%">خروج از پنل</button>
           </div>
         </template>
       </div>

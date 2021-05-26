@@ -1,29 +1,116 @@
-.absolute-button-bottom{
-	width: 100%;
-	position: absolute;
-	border-radius: 0;
-	right: 0;
-	bottom: -20px;
+@font-face {
+  font-family: Vazir;
+  src: url("../assets/fonts/Vazir-Regular-FD-WOL.eot");
+  src: url("../assets/fonts/Vazir-Regular-FD-WOL.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/Vazir-Regular-FD-WOL.woff2") format("woff2"),
+    url("../assets/fonts/Vazir-Regular-FD-WOL.woff") format("woff"),
+    url("../assets/fonts/Vazir-Regular-FD-WOL.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
-.relative-position{
-	position: relative;
+@font-face {
+  font-family: Vazir;
+  src: url("../assets/fonts/Vazir-Bold-FD-WOL.eot");
+  src: url("../assets/fonts/Vazir-Bold-FD-WOL.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/Vazir-Bold-FD-WOL.woff2") format("woff2"),
+    url("../assets/fonts/Vazir-Bold-FD-WOL.woff") format("woff"),
+    url("../assets/fonts/Vazir-Bold-FD-WOL.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../assets/fonts/Vazir-Black-FD-WOL.eot");
+  src: url("../assets/fonts/Vazir-Black-FD-WOL.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/Vazir-Black-FD-WOL.woff2") format("woff2"),
+    url("../assets/fonts/Vazir-Black-FD-WOL.woff") format("woff"),
+    url("../assets/fonts/Vazir-Black-FD-WOL.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../assets/fonts/Vazir-Medium-FD-WOL.eot");
+  src: url("../assets/fonts/Vazir-Medium-FD-WOL.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/Vazir-Medium-FD-WOL.woff2") format("woff2"),
+    url("../assets/fonts/Vazir-Medium-FD-WOL.woff") format("woff"),
+    url("../assets/fonts/Vazir-Medium-FD-WOL.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../assets/fonts/Vazir-Light-FD-WOL.eot");
+  src: url("../assets/fonts/Vazir-Light.eot?#iefix") format("embedded-opentype"),
+    url("../assets/fonts/Vazir-Light-FD-WOL.woff2") format("woff2"),
+    url("../assets/fonts/Vazir-Light-FD-WOL.woff") format("woff"),
+    url("../assets/fonts/Vazir-Light-FD-WOL.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: Vazir;
+  src: url("../assets/fonts/Vazir-Thin-FD-WOL.eot");
+  src: url("../assets/fonts/Vazir-Thin-FD-WOL.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/Vazir-Thin-FD-WOL.woff2") format("woff2"),
+    url("../assets/fonts/Vazir-Thin-FD-WOL.woff") format("woff"),
+    url("../assets/fonts/Vazir-Thin-FD-WOL.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+.absolute-button-bottom {
+  width: 100%;
+  position: absolute;
+  border-radius: 0;
+  right: 0;
+  bottom: -20px;
+}
+.relative-position {
+  position: relative;
 }
 .card-img-top {
-    width: 100% !important;
-    height: 15vw;
-    object-fit: cover;
+  width: 100% !important;
+  height: max-content;
+  object-fit: cover;
 }
-html,body,#app{
-	height: 100%;
+* {
+  font-family: Vazir;
 }
-#app{
-	position: relative;
-	z-index: 2;
-	margin-bottom: 150px;
-	background: white; 
+html,
+body,
+#app {
+  height: 100%;
+  background-color: #f9f7f7;
 }
-.footer{
-	height: 60px;
-	position: fixed;
-	bottom: 0;
+#app {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 350px;
+  background-color: #f9f7f7;
+}
+.footer {
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+}
+.bg-light {
+  background-color: #3f72af !important;
+}
+.card-header {
+  background-color: #112d4e;
+  color: white;
+}
+.card-body {
+  background-color: #dbe2ef;
+}
+.card {
+  box-shadow: 2px 0px 20px #0f0f0f3d;
+}
+.nav-link {
+  text-shadow: 0px 0px 12px;
 }

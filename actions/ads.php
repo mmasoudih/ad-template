@@ -134,7 +134,12 @@ function toggleAdsStatus($ads_id){
 
 function deleteAd($id){
   global $mysqli;
-  
+  $res = $mysqli->query("SELECT * FROM `ads` WHERE `id` = ${id}");
+  $res = $res->fetch_assoc();
+  $images_array = unserialize($res['images']);
+  foreach ($images_array as $value) {
+    @unlink(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'uploaded_pictures'.DIRECTORY_SEPARATOR.$value);
+  }
   $res = $mysqli->query("DELETE FROM `ads` WHERE `id` = ${id}");
   if($res){
     echo response([

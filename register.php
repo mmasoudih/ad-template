@@ -11,6 +11,7 @@ function register($name, $phone, $password, $password_confirm)
   global $mysqli;
   if (!empty($name) && !empty($phone) && !empty($password) && !empty($password_confirm)) {
     if ($password === $password_confirm) {
+      $password = hashPassword($password);
       $query = "INSERT INTO `users` (`name`,`phone`,`password`) VALUES ('${name}','${phone}','${password}')";
       $res = $mysqli->query($query);
       if ($res) {

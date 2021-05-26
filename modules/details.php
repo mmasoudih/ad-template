@@ -30,6 +30,10 @@ if (!isset($_GET['id'])){
             <strong>شماره موبایل: </strong>
             <i> {{singleAds.phone}} </i>
           </p>
+          <p>
+            <strong>قیمت: </strong>
+            <i> {{singleAds.price}} تومان </i>
+          </p>
           <p class="card-text">
             
             {{singleAds.description}}

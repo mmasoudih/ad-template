@@ -5,10 +5,6 @@ define('PASSWORD', '1234');
 define('DB_NAME', 'ad-manager');
 define('CHARSET', 'utf8');
 
-// define('USER_NAME','root');
-// define('PASSWORD', 'mahbod');
-// define('DB_NAME', 'mmasoudi_ad-manager');
-// define('CHARSET', 'utf8');
 
 $mysqli = new mysqli(SERVER,USER_NAME,PASSWORD,DB_NAME);
 
@@ -18,4 +14,4 @@ if ($mysqli -> connect_errno) {
 }
 
 $mysqli->set_charset(CHARSET);
-$mysqli->query('SET foreign_key_checks = 0');
+// $mysqli->query('SET foreign_key_checks = 0');

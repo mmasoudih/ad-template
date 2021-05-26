@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row mt-5">
-    <div class="col-3">
+    <div class="col-md-3 col-12 ">
       <div class="card">
         <div class="card-header">دسته‌بندی ها</div>
         <div class="card-body">
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="col-9" :class="{'d-flex' : !noAdsFound, 'flex-wrap': !noAdsFound, 'justify-content-center': !noAdsFound}">
+    <div class="col-12 col-md-9 py-4" :class="{'d-flex' : !noAdsFound, 'flex-wrap': !noAdsFound, 'justify-content-center': !noAdsFound}">
       <div class="col-12">
           <div class="mb-3 row px-2">
             <input type="text" class="form-control" id="search" placeholder="چیزی که دنبالشی بنویس اینجا و اینتر رو بزن " @keypress.enter="filterResultBySearch">

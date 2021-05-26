@@ -18,3 +18,7 @@ function checkAdminLogin(){
     header('location: /');
   }
 }
+function hashPassword($password){
+  $salt = 'THIS_IS_AN_UNIQUE_STRING_!!__!!__((0+×))|{+{_}+}|_AeDcYj<4%#@!*^^Vvfg((&gv)(';
+  return md5($salt.$password);
+}

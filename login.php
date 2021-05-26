@@ -10,6 +10,7 @@ function login($phone, $password)
 {
   global $mysqli;
   if (!empty($phone) && !empty($password)) {
+    $password = hashPassword($password);
     $query = "SELECT * FROM `users` WHERE `phone` = '${phone}' AND `password` = '${password}'";
     $res = $mysqli->query($query);
     if($res->num_rows > 0){

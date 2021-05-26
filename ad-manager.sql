@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 25, 2021 at 07:40 PM
+-- Generation Time: May 26, 2021 at 04:47 PM
 -- Server version: 10.5.9-MariaDB
--- PHP Version: 7.4.15
+-- PHP Version: 7.4.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,6 +66,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_persian_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `phone`, `status`, `password`, `role`) VALUES
+(1, 'محمد مسعودی', '09213391796', 'enable', 'e424d4f74d0e02f05c3c8e8841ba18a9', 'admin');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -109,7 +116,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

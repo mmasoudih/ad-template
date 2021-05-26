@@ -12,7 +12,6 @@
                 <th>توضیحات</th>
                 <th>شماره موبایل</th>
                 <th>دسته‌بندی</th>
-                <th>کاربر</th>
                 <th>وضعیت</th>
                 <th style="text-align: left;">عملیات</th>
               </tr>
@@ -25,7 +24,6 @@
                 <td>{{ ads.description }}</td>
                 <td>{{ ads.phone }}</td>
                 <td>{{ ads.category }}</td>
-                <td>{{ ads.user }}</td>
                 
                 
                 

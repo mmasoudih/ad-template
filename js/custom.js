@@ -278,6 +278,8 @@ var vm = new Vue({
           this.newAdsForm.phone = '';
           this.closeModal();
           this.$noty.success({message: data.message});
+          this.getAds();
+          this.getUserAds();
         }
       });
     },
@@ -292,6 +294,9 @@ var vm = new Vue({
         if (status === 200) {
           
           this.userAdsList = ads;
+        }
+        if(status === 404){
+          this.userAdsList = []
         }
         console.log(this.userAdsList.ads)
       });
