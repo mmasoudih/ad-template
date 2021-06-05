@@ -23,6 +23,7 @@ var vm = new Vue({
       adsFileCount: 1,
       maxAdsFileCount: 5,
       noAdsFound: false,
+      showAllAdsState: false,
       adsFileArray: [],
       adsCategoryModalSelected: "",
       listOfUploadedFilesName: [],
@@ -276,6 +277,7 @@ var vm = new Vue({
           this.newAdsForm.categoryId = '';
           this.newAdsForm.adsPrice = '';
           this.newAdsForm.phone = '';
+          this.listOfUploadedFilesName = [];
           this.closeModal();
           this.$noty.success({message: data.message});
           this.getAds();
@@ -394,8 +396,10 @@ var vm = new Vue({
         if(ads.length > 0){
           this.adsList = ads;
           this.noAdsFound = false;
+          this.showAllAdsState = true;
         } else { 
           this.noAdsFound = true;
+          this.showAllAdsState = false;
         }
       });
 
@@ -412,8 +416,10 @@ var vm = new Vue({
           if(ads.length > 0){
             this.adsList = ads;
             this.noAdsFound = false;
+            this.showAllAdsState = true;
           } else { 
             this.noAdsFound = true;
+            this.showAllAdsState = false;
           }
         });
       }
@@ -421,6 +427,7 @@ var vm = new Vue({
     showAllAds(){
       this.getAds();
       this.noAdsFound = false;
+      this.showAllAdsState = false;
     }
   },
   computed:{
