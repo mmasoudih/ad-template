@@ -5,7 +5,7 @@
         <div class="card-header">مدیریت اگهی‌ها</div>
         <div class="card-body">
           <table class="table table-striped">
-            <thead> 
+            <thead>
               <tr>
                 <th>#</th>
                 <th>عنوان</th>
@@ -13,37 +13,37 @@
                 <th>شماره موبایل</th>
                 <th>دسته‌بندی</th>
                 <th>وضعیت</th>
-                <th style="text-align: left;">عملیات</th>
+                <th style="text-align: left; width: 130px;">عملیات</th>
               </tr>
             </thead>
             <tbody>
-            <template v-for="(ads, index) in userAdsList">
-              <tr> 
-                <td>{{ index + 1 }}</td>
-                <td>{{ ads.title }}</td>
-                <td>{{ ads.description }}</td>
-                <td>{{ ads.phone }}</td>
-                <td>{{ ads.category }}</td>
-                
-                
-                
-                <td>
-                  <template v-if="ads.status == 'enable'">
-                    <span class="badge bg-success">فعال</span>
-                  </template>
-                  <template v-if="ads.status != 'enable'">
-                    <span class="badge bg-warning text-dark">غیرفعال</span>
-                  </template>
+              <template v-for="(ads, index) in userAdsList">
+                <tr>
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ ads.title }}</td>
+                  <td>{{ ads.description }}</td>
+                  <td>{{ ads.phone }}</td>
+                  <td>{{ ads.category }}</td>
 
-                </td>
 
-                
-                <td style="text-align: left;">
-                  <button class="btn btn-sm btn-danger" @click.prevent="deleteAd(ads.id)" :disabled="loading">حذف</button>
 
-                </td>
-              </tr>
-            </template>
+                  <td>
+                    <template v-if="ads.status == 'enable'">
+                      <span class="badge bg-success">فعال</span>
+                    </template>
+                    <template v-if="ads.status != 'enable'">
+                      <span class="badge bg-warning text-dark">غیرفعال</span>
+                    </template>
+
+                  </td>
+
+
+                  <td style="text-align: left;">
+                    <button class="btn btn-sm btn-danger" @click.prevent="deleteAd(ads.id)" :disabled="loading">حذف</button>
+
+                  </td>
+                </tr>
+              </template>
             </tbody>
           </table>
         </div>
